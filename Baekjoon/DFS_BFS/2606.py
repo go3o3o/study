@@ -1,11 +1,8 @@
-### DFS와 BFS
 from collections import deque
 
 def dfs(v):
     visited.append(v)
-    # print(graph[v])
     for e in graph[v]:
-        # print(e)
         if not e in visited:
             dfs(e)
 
@@ -18,24 +15,21 @@ def bfs(v):
         for e in graph[v]:
             if not e in visited:
                 q.append(e)
-    pass
 
-n, m, v = map(int, input().split())
-graph = [[] for _ in range(n + 1)]
+c = int(input())
+pair = int(input())
+graph = [[] for _ in range(c + 1)]
 
-for _ in range(m):
+for _ in range(pair):
     x, y = map(int, input().split())
     graph[x].append(y)
     graph[y].append(x)
 
 print(graph)
-for e in graph: 
-    e.sort()
-# visited = [False] * (n + 1)
 visited = []
-dfs(v)
-print(visited)
+dfs(1)
+print(len(visited) - 1)
 
 visited = []
-bfs(v)
-print(visited)
+bfs(1)
+print(len(visited) - 1)

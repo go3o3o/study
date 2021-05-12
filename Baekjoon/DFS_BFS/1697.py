@@ -10,7 +10,7 @@ max = 100001
 n, k = map(int, input().split())
 array = [0] * max
 
-def dfs():
+def bfs():
     q = deque([n])
     while q:
         now_pos = q.popleft()
@@ -21,4 +21,4 @@ def dfs():
                 array[next_pos] = array[now_pos] + 1
                 q.append(next_pos)
 
-print(dfs())
+print(bfs())
