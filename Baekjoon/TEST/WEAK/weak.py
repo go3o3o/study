@@ -10,6 +10,7 @@ def m_14888(): ### 재귀탐색
     lst = list(map(int, input().split()))
     a, s, m, d = list(map(int, input().split())) # +, -, *, /
     m_14888_recur(lst[0], 1, a, s, m, d, n, lst, maxv, minv)
+    print(maxv, minv)
 
 def m_14888_recur(num, idx, add, sub, multi, division, n, lst, maxv, minv):
     if idx == n:
@@ -21,11 +22,11 @@ def m_14888_recur(num, idx, add, sub, multi, division, n, lst, maxv, minv):
         if add:
             m_14888_recur(num + lst[idx], idx + 1, add - 1, sub, multi, division, n, lst, maxv, minv)
         if sub:
-            m_14888_recur(num - lst[idx], idx + 1, add - 1, sub, multi, division, n, lst, maxv, minv)
+            m_14888_recur(num - lst[idx], idx + 1, add, sub - 1, multi, division, n, lst, maxv, minv)
         if multi:
-            m_14888_recur(num * lst[idx], idx + 1, add - 1, sub, multi, division, n, lst, maxv, minv)
+            m_14888_recur(num * lst[idx], idx + 1, add, sub, multi - 1, division, n, lst, maxv, minv)
         if division:
-            m_14888_recur(num // lst[idx], idx + 1, add - 1, sub, multi, division, n, lst, maxv, minv)
+            m_14888_recur(-(-num // lst[idx]) if num < 0 else num // lst[idx], idx + 1, a, s, m, d - 1)
 
 
 def m_2504(): ### 스택
