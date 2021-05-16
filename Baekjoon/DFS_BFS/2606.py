@@ -33,3 +33,16 @@ print(len(visited) - 1)
 visited = []
 bfs(1)
 print(len(visited) - 1)
+
+
+"""
+7
+6
+1 2
+2 3
+1 5
+5 2
+5 6
+4 7
+-> 4
+"""
