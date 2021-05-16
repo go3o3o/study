@@ -26,3 +26,15 @@ lst = list(map(int, input().split()))
 a, s, m, d = list(map(int, input().split()))
 recursive(lst[0], 1, a, s, m, d)
 print(maxv, minv)
+
+"""
+2
+5 6
+0 0 1 0
+-> 30 / 30
+
+6
+1 2 3 4 5 6
+2 1 1 1
+-> 54 / -24
+"""
