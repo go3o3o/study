@@ -1,4 +1,4 @@
-import sys 
+### 숫자 야구
 from itertools import permutations
 
 n = int(input())
