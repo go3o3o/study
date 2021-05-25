@@ -10,12 +10,12 @@ def m_2501():
 def m_3460():
     t = int(input())
     for _ in range(t):
-        x = int(input())
-        b = list(format(x, 'b'))
-        for idx, i in enumerate(b):
-            if i == '1':
-                print(idx, end=' ')
-        
+        n = int(input())
+        b = bin(n)[2:]
+        for i in range(len(b)):
+            if b[::-1][i] == '1':
+                print(i, end=' ')
+                        
 def m_2693():
     t = int(input())
     for _ in range(t):
