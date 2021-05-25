@@ -1,8 +1,8 @@
 ### 달리기
-from sys import stdin
+import sys
 from collections import deque
 n, m, k = map(int, input().split())
-gym = [stdin.readline().rstrip() for _ in range(n)]
+gym = [sys.stdin.readline().rstrip() for _ in range(n)]
 
 dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
@@ -17,7 +17,7 @@ while queue:
     y, x = queue.popleft()
     if y == x2 - 1 and x == y2 - 1:
         print(visited[y][x])
-        break
+        sys.exit(0)
     for i in range(4):
         for num in range(1, k + 1):
             nx = x + dx[i] * num
@@ -29,3 +29,5 @@ while queue:
                 visited[ny][nx] = visited[y][x] + 1
             elif visited[ny][nx] == visited[y][x] + 1: continue
             else: break
+
+print(-1)
