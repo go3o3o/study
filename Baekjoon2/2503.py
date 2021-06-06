@@ -2,26 +2,23 @@
 from itertools import permutations
 
 n = int(input())
-num = list(permutations([1, 2, 3, 4, 5, 6, 7, 8, 9], 3))
+num = list(permutations(range(1, 10), 3))
+
+def check(num, ans):
+    strike = 0
+    ball = 0
+    for i in range(3):
+        if str(num[i]) == ans[i]: strike += 1
+        elif str(num[i]) in ans: ball += 1 
+    return (strike, ball)
 
 for _ in range(n):
     ans, s, b = map(int, input().split())
-    ans = list(str(ans))
-    remove_cnt = 0
-
-    for i in range(len(num)):
-        s_cnt = b_cnt = 0
-        i -= remove_cnt
-
-        for j in range(3):
-            ans[j] = int(ans[j])
-            if ans[j] in num[i]:
-                if j == num[i].index(ans[j]):
-                    s_cnt += 1
-                else:
-                    b_cnt += 1
-            if s_cnt != s or b_cnt != b:
-                num.remove(num[i])
-                remove_cnt += 1
-
+    result = []
+    for i in num:
+        tstrike, tball = check(i, str(ans))
+        if tstrike == s and tball == b:
+            result.append(i)
+    num = result
+# print(num)
 print(len(num))
