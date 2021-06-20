@@ -5,7 +5,7 @@ def bfs(x, y):
     queue = [(x, y)]
     while queue:
         x, y = queue.pop(0)
-        del queue[0]
+        print(x, y)
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
@@ -31,3 +31,4 @@ for _ in range(tc):
                 bfs(i, j)
                 visitied[i][j] = 0
                 result += 1
+print(result)

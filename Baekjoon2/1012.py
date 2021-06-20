@@ -7,7 +7,7 @@ def bfs(x, y):
     queue = [[x, y]]
     while queue:
         x, y = queue[0][0], queue[0][1]
-        # print(x, y)
+        print(x, y)
         del queue[0]
         for i in range(4):
             nx = x + dx[i]
