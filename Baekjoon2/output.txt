@@ -1,1 +1,4 @@
-2
+<built-in method sort of list object at 0x7fb17c30b880>
+[[], [2, 3], [1, 5], [1, 4], [3, 5], [2, 4]]
+3 1 2 5 4
+3 1 4 2 5
