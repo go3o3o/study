@@ -1,0 +1,19 @@
+from collections import deque
+max_size = 100001
+dx, dy = [1, -1, 0, 0], [0, 0, -1, 1]
+
+n, k = map(int, input().split())
+
+result = [0] * max_size
+
+def bfs():
+    queue = deque([n])
+    while queue:
+        now_pos = queue.popleft()
+        if now_pos == k:
+            return result[now_pos]
+        for next_pos in (now_pos-1, now_pos+1, now_pos*2):
+            if 0 <= next_pos < max_size and not result[next_pos]:
+                result[next_pos] = result[now_pos] + 1
+                queue.append(next_pos)
+print(bfs())
