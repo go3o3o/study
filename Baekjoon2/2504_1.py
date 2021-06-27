@@ -1,52 +1,39 @@
-sb = list(input())
-stack = []
+s = list(input())
+q = []
+error_flag = False
 
-for i in sb:
-    if i == ')':
-        temp = 0
-        while stack:
-            top = stack.pop()
-            if top == '(':
-                if temp == 0:
-                    stack.append(2)
-                else:
-                    stack.append(2 * temp)
-                break
-            elif top == '[':
-                print(0)
-                exit(0)
-            else:
-                if temp == 0:
-                    temp = int(top)
-                else:
-                    temp += int(top)
-    elif i == ']':
-        temp = 0
-        while stack:
-            top = stack.pop()
-            if top == '[':
-                if temp == 0:
-                    stack.append(3)
-                else:
-                    stack.append(3 * temp)
-                break
-            elif top == '(':
-                print(0)
-                exit(0)
-            else:
-                if temp == 0:
-                    temp = int(top)
-                else:
-                    temp += int(top)
-    else:
-        stack.append(i)
+for i in range(len(s)):
+    if s[i] == '(' or s[i] == '[':
+        q.append(s[i])
+        continue
+    elif s[i] == ')':
+        val = 2
+        true_left = '('
+        false_left = '['
+    elif s[i] == ']':
+        val = 3
+        true_left = '['
+        false_left = '('
 
-result = 0
-for i in stack:
-    if i == '(' or i == '[':
-        print(0)
-        exit(0)
-    else:
-        result += i 
+    tmp = 0
+    while True:
+        if len(q) == 0:
+            error_flag = True
+            break
 
-        
+        x = q.pop()
+        if x == true_left:
+            break
+        elif x == false_left:
+            error_flag = True
+            break
+        else:
+            tmp += x
+
+    tmp = val if tmp == 0 else tmp * val
+    q.append(tmp)
+
+if '(' in q or '[' in q:
+    error_flag = True
+
+print(0) if error_flag else print(sum(q))
