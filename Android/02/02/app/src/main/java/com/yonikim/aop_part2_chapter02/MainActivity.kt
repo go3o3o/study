@@ -8,6 +8,7 @@ import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
+import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
     
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textView6)
         )
     }
-    private val isRun = false
+    private var isRun = false
     private val pickNumberSet = hashSetOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +46,22 @@ class MainActivity : AppCompatActivity() {
 
         initRunButton()
         initAddButton()
+        initClearButton()
     }
     private fun initRunButton() {
         runButton.setOnClickListener {
             val list = getRandomNumber()
+
+            isRun = true
+
+            list.forEachIndexed { index, number ->
+                val textView = numberTextViewList[index]
+
+                textView.text = number.toString()
+                textView.isVisible = true
+            }
+
+            isRun = true
             Log.d("MainActivity", list.toString())
         }
     }
@@ -73,16 +86,28 @@ class MainActivity : AppCompatActivity() {
             pickNumberSet.add(numberPicker.value)
         }
     }
+    private fun initClearButton() {
+        clearButton.setOnClickListener {
+            pickNumberSet.clear()
+            numberTextViewList.forEach {
+                it.isVisible = false
+            }
+            isRun = false
+        }
+    }
     private fun getRandomNumber(): List<Int> {
         val numberList = mutableListOf<Int>()
             .apply {
                 for (i in 1..45) {
+                    if (pickNumberSet.contains(i)) {
+                        continue
+                    }
                     this.add(i)
                 }
             }
         numberList.shuffle()
 
-        val newList = numberList.subList(0, 5)
+        val newList = pickNumberSet.toList() + numberList.subList(0, 6 - pickNumberSet.size)
         return newList.sorted()
     }
 }
