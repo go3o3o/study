@@ -5,10 +5,14 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.room.Room
+import com.yonikim.aop_part2_chapter04.model.History
 import java.lang.NumberFormatException
 
 class MainActivity : AppCompatActivity() {
@@ -22,18 +26,24 @@ class MainActivity : AppCompatActivity() {
     private val historyLayout: View by lazy {
         findViewById<View>(R.id.historyLayout)
     }
-    private val historyLinearLayout: View by lazy {
-        findViewById<View>(R.id.historyLinearLayout)
+    private val historyLinearLayout: LinearLayout by lazy {
+        findViewById<LinearLayout>(R.id.historyLinearLayout)
     }
+
+    lateinit var db: AppDatabase
+
     private var isOperator = false
     private var hasOperator = false
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "historyDB"
+        ).build()
     }
 
     fun buttonClicked(v: View) {
@@ -54,7 +64,6 @@ class MainActivity : AppCompatActivity() {
             R.id.buttonDivider -> operatorButtonClicked("/")
             R.id.buttonModula -> operatorButtonClicked("%")
         }
-
     }
 
     private fun numberButtonClicked(number: String) {
@@ -122,6 +131,10 @@ class MainActivity : AppCompatActivity() {
         val expressionText = expressionTextView.text.toString()
         val resultText = calculateExpression()
 
+        Thread(Runnable {
+            db.historyDao().insertHistory(History(null, expressionText, resultText))
+        }).start()
+
         resultTextView.text = ""
         expressionTextView.text = resultText
 
@@ -162,7 +175,18 @@ class MainActivity : AppCompatActivity() {
 
     fun historyButtonClicked(v: View) {
         historyLayout.isVisible = true
+        historyLinearLayout.removeAllViews()
+        Thread(Runnable {
+            db.historyDao().getAll().reversed().forEach {
+                runOnUiThread {
+                    val historyView = LayoutInflater.from(this).inflate(R.layout.history_raw, null, false)
+                    historyView.findViewById<TextView>(R.id.expressionTextView).text = it.expression
+                    historyView.findViewById<TextView>(R.id.resultTextView).text = "= ${it.result}"
 
+                    historyLinearLayout.addView(historyView)
+                }
+            }
+        }).start()
 
     }
 
@@ -171,7 +195,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun historyClearButtonClicked(v: View) {
-
+        historyLinearLayout.removeAllViews()
+        Thread(Runnable {
+            db.historyDao().deleteAll()
+        }).start()
     }
 
     fun clearButtonClicked(v: View) {
