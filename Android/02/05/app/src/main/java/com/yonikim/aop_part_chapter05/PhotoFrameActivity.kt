@@ -1,16 +1,17 @@
 package com.yonikim.aop_part_chapter05
 
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import java.util.*
 import kotlin.concurrent.timer
 
 class PhotoFrameActivity : AppCompatActivity() {
     private val photoList = mutableListOf<Uri>()
     private var currentPosition = 0
+
+    private var timer: Timer? = null
 
     private val photoImageView: ImageView by lazy {
         findViewById<ImageView>(R.id.photoImageView)
@@ -24,7 +25,7 @@ class PhotoFrameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_photoframe)
 
         getPhotoUriFromIntent()
-        startTimer()
+//        startTimer()
     }
 
     private fun getPhotoUriFromIntent() {
@@ -43,7 +44,6 @@ class PhotoFrameActivity : AppCompatActivity() {
                 val current = currentPosition
                 val next = if (photoList.size <= currentPosition + 1) 0 else currentPosition + 1
 
-                Log.d("PhotoFrameActivity", photoList[current].toString())
                 backgroundPhotoImageView.setImageURI(photoList[current])
                 photoImageView.alpha = 0f
                 photoImageView.setImageURI(photoList[next])
@@ -53,8 +53,22 @@ class PhotoFrameActivity : AppCompatActivity() {
                     .start()
 
                 currentPosition = next
-                Log.d("PhotoFrameActivity", currentPosition.toString())
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timer?.cancel()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        startTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer?.cancel()
     }
 }

@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     private fun initStartPhotoFrameModeButton() {
         startPhotoFrameModeButton.setOnClickListener {
             val intent = Intent(this, PhotoFrameActivity::class.java)
-            imageViewList.forEachIndexed { index, uri ->
+            imageUriList.forEachIndexed { index, uri ->
                 intent.putExtra("photo$index", uri.toString())
             }
             intent.putExtra("photoListSize", imageUriList.size)
