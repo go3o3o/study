@@ -1,0 +1,129 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: 가상화폐 매매 프로그램
+# during dev, should point to your local machine
+# host: localhost:10010
+securityDefinitions:
+  key:
+    type: apiKey
+    in: header
+    name: API-KEY
+# basePath prefixes all resource paths 
+basePath: /
+tags:
+ - name: 업비트
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /upbit/accounts:
+    x-swagger-router-controller: upbit
+    get:
+      tags:
+       - 업비트
+      summary: 전체 계좌 조회
+      description: 보유한 자산 리스트
+      operationId: getAccounts
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /upbit/market/all:
+    x-swagger-router-controller: upbit
+    get:
+      tags:
+       - 업비트
+      summary: 마켓 코드 조회
+      description: 업비트에서 거래 가능한 마켓 목록
+      operationId: getMarketAll
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /upbit/orders/chance:
+    x-swagger-router-controller: upbit
+    get:
+      tags:
+       - 업비트
+      summary: 주문 가능 정보 조회
+      description: 마켓별 주문 가능 정보를 확인
+      operationId: getOrdersChance
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              market:
+                type: string
+                description: 암호화폐 ID
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /upbit/candles:
+    x-swagger-router-controller: upbit
+    get:
+      tags:
+       - 업비트
+      description: 시세 캔들 조회
+      operationId: getCandles
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  SuccessResponse:
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+  HelloWorldResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
