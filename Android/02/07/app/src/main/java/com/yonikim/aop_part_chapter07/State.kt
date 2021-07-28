@@ -1,0 +1,8 @@
+package com.yonikim.aop_part_chapter07
+
+enum class State {
+    BEFORE_RECORDING,
+    ON_RECORDING,
+    AFTER_RECORDING,
+    ON_PLAYING
+}
