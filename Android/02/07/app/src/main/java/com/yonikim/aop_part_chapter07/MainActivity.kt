@@ -2,6 +2,8 @@ package com.yonikim.aop_part_chapter07
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
+import android.media.MediaRecorder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -10,16 +12,27 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.recordButton)
     }
 
-    private val requiredPermissions = arrayOf(Manifest.permission.RECORD_AUDIO)
+    private val requiredPermissions =
+        arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE)
 
+    private val recordingFilePath: String by lazy {
+        "${externalCacheDir?.absolutePath}/recording.3gp"
+    }
+    private var player: MediaPlayer? = null
+    private var recorder: MediaRecorder? = null
     private var recordState = State.BEFORE_RECORDING
+        set(value) {
+            field = value
+            recordButton.updateIconWithState(value)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         requestAudioPermission()
-        initView()
+        initViews()
+        bindViews()
     }
 
     override fun onRequestPermissionsResult(
@@ -42,8 +55,63 @@ class MainActivity : AppCompatActivity() {
         requestPermissions(requiredPermissions, REQUEST_RECORD_AUDIO_PERMISSION)
     }
 
-    private fun initView() {
+    private fun initViews() {
         recordButton.updateIconWithState(recordState)
+    }
+
+    private fun bindViews() {
+        recordButton.setOnClickListener {
+            when (recordState) {
+                State.BEFORE_RECORDING -> {
+                    startRecording()
+                }
+                State.ON_RECORDING -> {
+                    stopRecording()
+                }
+                State.AFTER_RECORDING -> {
+                    startPlaying()
+                }
+                State.ON_PLAYING -> {
+                    stopPlaying()
+                }
+            }
+        }
+    }
+
+    private fun startRecording() {
+        recorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            setOutputFile(recordingFilePath)
+            prepare()
+        }
+        recorder?.start()
+        recordState = State.ON_RECORDING
+    }
+
+    private fun stopRecording() {
+        recorder?.run {
+            stop()
+            release()
+        }
+        recorder = null
+        recordState = State.AFTER_RECORDING
+    }
+
+    private fun startPlaying() {
+        player = MediaPlayer().apply {
+            setDataSource(recordingFilePath)
+            prepare()
+        }
+        player?.start()
+        recordState = State.ON_PLAYING
+    }
+
+    private fun stopPlaying() {
+        player?.release()
+        player = null
+        recordState = State.AFTER_RECORDING
     }
 
     companion object {
