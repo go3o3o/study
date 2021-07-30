@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <com.yonikim.aop_part_chapter07.SoundVisualizerView
+        android:id="@+id/soundVisualizerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/recordTimeTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
@@ -17,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@id/recordButton"
         tools:ignore="HardcodedText" />
 
-    <TextView
+    <com.yonikim.aop_part_chapter07.CountUpView
         android:id="@+id/recordTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
