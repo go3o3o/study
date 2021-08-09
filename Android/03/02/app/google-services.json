@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "297446360815",
+    "project_id": "aop-part3-chapter02-24da1",
+    "storage_bucket": "aop-part3-chapter02-24da1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297446360815:android:55088a4519a164d7c9bd1a",
+        "android_client_info": {
+          "package_name": "com.yonikim.aop_part3_chapter02"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297446360815-qdaeauoqc9coa5sd65mo3n7vmo90fqan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZxwsS8z-lCOeWKmtRaST3oEVLUoiocTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297446360815-qdaeauoqc9coa5sd65mo3n7vmo90fqan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
