@@ -49,19 +49,19 @@
         android:id="@+id/onOffButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/changeAlarmTimeButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/changeAlarmTimeButton"
-        tools:text="알람켜기" />
+        android:text="알람켜기" />
 
     <Button
         android:id="@+id/changeAlarmTimeButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="시간 재설정"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="시간 재설정" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
