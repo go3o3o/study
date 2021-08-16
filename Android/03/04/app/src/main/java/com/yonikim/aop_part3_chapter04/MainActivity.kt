@@ -3,8 +3,11 @@ package com.yonikim.aop_part3_chapter04
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.MotionEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yonikim.aop_part3_chapter04.Model.BestSellerDto
+import com.yonikim.aop_part3_chapter04.Model.SearchBookDto
 import com.yonikim.aop_part3_chapter04.adapter.BookAdapter
 import com.yonikim.aop_part3_chapter04.api.BookService
 import com.yonikim.aop_part3_chapter04.databinding.ActivityMainBinding
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: BookAdapter
+    private lateinit var bookService: BookService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +36,8 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val bookService = retrofit.create(BookService::class.java)
-        bookService.getBestSellerBooks(API_KEY)
+        bookService = retrofit.create(BookService::class.java)
+        bookService.getBestSellerBooks(getString(R.string.interParkAPIKey))
             .enqueue(object : Callback<BestSellerDto> {
                 override fun onResponse(
                     call: Call<BestSellerDto>,
@@ -52,6 +56,34 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, t.toString())
                 }
             })
+
+        binding.searchEditText.setOnKeyListener { y, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == MotionEvent.ACTION_DOWN) {
+                search(binding.searchEditText.text.toString())
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
+    }
+
+    private fun search(keyword: String) {
+        bookService.getBookByName(getString(R.string.interParkAPIKey), keyword)
+            .enqueue(object : Callback<SearchBookDto> {
+                override fun onResponse(
+                    call: Call<SearchBookDto>,
+                    response: Response<SearchBookDto>
+                ) {
+                    if (response.isSuccessful.not()) {
+                        return
+                    }
+                    adapter.submitList(response.body()?.books.orEmpty())
+
+                }
+
+                override fun onFailure(call: Call<SearchBookDto>, t: Throwable) {
+//                    TODO("Not yet implemented")
+                }
+            })
     }
 
     private fun initBookRecyclerView() {
@@ -61,8 +93,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val API_KEY =
-            "5FEF336D06B18F8E70956C4CB68069F7710D5A07BFE9262A4FA467B7A2B75F8F"
         private const val TAG = "MainActivity"
     }
 }
