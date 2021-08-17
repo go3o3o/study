@@ -12,7 +12,6 @@ import com.yonikim.aop_part3_chapter04.databinding.ItemBookBinding
 
 
 class BookAdapter : ListAdapter<Book, BookAdapter.BookItemViewHolder>(diffUtil) {
-
     inner class BookItemViewHolder(private val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(bookModel: Book) {

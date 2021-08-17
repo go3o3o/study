@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/background_gray_stroke_radius_8.xml" value="0.19155133506912977" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24791666666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_book.xml" value="0.13584373924663115" />
+        <entry key="app/src/main/res/layout/item_history.xml" value="0.12604166666666666" />
       </map>
     </option>
   </component>
