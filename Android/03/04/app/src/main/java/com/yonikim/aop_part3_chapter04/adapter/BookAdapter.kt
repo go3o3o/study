@@ -11,15 +11,20 @@ import com.yonikim.aop_part3_chapter04.Model.Book
 import com.yonikim.aop_part3_chapter04.databinding.ItemBookBinding
 
 
-class BookAdapter : ListAdapter<Book, BookAdapter.BookItemViewHolder>(diffUtil) {
+class BookAdapter(private val itemClickedListener: (Book) -> Unit) : ListAdapter<Book, BookAdapter.BookItemViewHolder>(diffUtil) {
     inner class BookItemViewHolder(private val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(bookModel: Book) {
-            Log.d("BookAdapter", bookModel.toString())
             binding.titleTextView.text = bookModel.title
             binding.descriptionTextView.text = bookModel.description
 
-            Glide.with(binding.coverImageView.context).load(bookModel.coverSmallUrl)
+            binding.root.setOnClickListener {
+                itemClickedListener(bookModel)
+            }
+
+            Glide.with(binding.coverImageView.context)
+                .load(bookModel.coverSmallUrl)
                 .into(binding.coverImageView)
 
         }
