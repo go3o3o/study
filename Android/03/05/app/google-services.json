@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1038773113223",
+    "firebase_url": "https://aop-part3-chapter05-dd94d-default-rtdb.firebaseio.com",
+    "project_id": "aop-part3-chapter05-dd94d",
+    "storage_bucket": "aop-part3-chapter05-dd94d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038773113223:android:59ae7aa821f75b724d8322",
+        "android_client_info": {
+          "package_name": "com.yonikim.aop_part3_chapter05"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038773113223-o866jfj590o66qpq88futqnfrp1cdlhn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjkqtafzxPyp5h3XjZzKB_u1UKy4_PjPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038773113223-o866jfj590o66qpq88futqnfrp1cdlhn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
