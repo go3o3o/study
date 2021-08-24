@@ -6,7 +6,9 @@
         <entry key="app/src/main/res/layout/activity_like.xml" value="0.12604166666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24791666666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12604166666666666" />
+        <entry key="app/src/main/res/layout/activity_match.xml" value="0.1234375" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.24791666666666667" />
+        <entry key="app/src/main/res/layout/item_matched_user.xml" value="0.1234375" />
       </map>
     </option>
   </component>
