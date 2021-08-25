@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">aop-part3-chapter06</string>
+    <string name="home">홈</string>
+    <string name="chatList">채팅</string>
+    <string name="myPage">마이페이지</string>
+
+</resources>

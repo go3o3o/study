@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "772529263601",
+    "project_id": "fir-test-c67da",
+    "storage_bucket": "fir-test-c67da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772529263601:android:df07666a0d353ff53aaa50",
+        "android_client_info": {
+          "package_name": "com.yonikim.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772529263601-23qm3f9kan8ijf8si6mi2dr3goctvemt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyVCwD7LmmWa4D3_F9BgL4BSLlgeIlZnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772529263601-23qm3f9kan8ijf8si6mi2dr3goctvemt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
