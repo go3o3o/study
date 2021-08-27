@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/selector_menu_color.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23489583333333333" />
+        <entry key="app/src/main/res/layout/article_item.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/fragment_chatlist.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.24895833333333334" />
