@@ -20,7 +20,6 @@ import com.yonikim.aop_part3_chapter06.DBKey.Companion.CHILD_CHAT
 import com.yonikim.aop_part3_chapter06.DBKey.Companion.DB_ARTICLES
 import com.yonikim.aop_part3_chapter06.DBKey.Companion.DB_USERS
 import com.yonikim.aop_part3_chapter06.R
-import com.yonikim.aop_part3_chapter06.chatList.ChatList
 import com.yonikim.aop_part3_chapter06.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -64,11 +63,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         articleAdapter = ArticleAdapter(onItemClicked = { articleModel ->
             if (auth.currentUser != null) {
                 if (auth.currentUser?.uid != articleModel.sellerId) {
+                    val buyerId = auth.currentUser!!.uid
+                    val sellerId = articleModel.sellerId
+                    val itemTitle = articleModel.title
+                    val chatRoomKey = "$buyerId#$sellerId#$itemTitle"
                     val chatRoom = ChatListItem(
-                        buyerId = auth.currentUser!!.uid,
-                        sellerId = articleModel.sellerId,
-                        itemTitle = articleModel.title,
-                        key = System.currentTimeMillis()
+                        buyerId = buyerId,
+                        sellerId = sellerId,
+                        itemTitle = itemTitle,
+                        key = chatRoomKey
                     )
                     userDB.child(auth.currentUser!!.uid)
                         .child(CHILD_CHAT)

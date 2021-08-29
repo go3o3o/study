@@ -3,10 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.22592592592592592" />
+        <entry key="app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.22592592592592592" />
+        <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.22592592592592592" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/selector_menu_color.xml" value="0.2388888888888889" />
+        <entry key="app/src/main/res/layout/activity_chatroom.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/layout/add_article_activity.xml" value="0.1203125" />
         <entry key="app/src/main/res/layout/article_item.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/layout/chat_item.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/layout/chat_list_item.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/layout/chatlist_item.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/fragment_chatlist.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.24895833333333334" />
