@@ -4,11 +4,15 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
+import com.naver.maps.map.widget.LocationButtonView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,12 +27,30 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         findViewById(R.id.mapView)
     }
 
+    private val viewPager: ViewPager2 by lazy {
+        findViewById(R.id.houseViewPager)
+    }
+    private val recyclerView: RecyclerView by lazy {
+        findViewById(R.id.recyclerView)
+    }
+    private val currentLocationButton: LocationButtonView by lazy {
+        findViewById(R.id.currentLocationButton)
+    }
+
+    private val viewPagerAdapter = HouseViewPagerAdapter()
+    private val recyclerViewAdapter = HouseListAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mapView.onCreate(savedInstanceState)
 
         mapView.getMapAsync(this)
+
+        viewPager.adapter = viewPagerAdapter
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
     }
 
     override fun onMapReady(map: NaverMap) {
@@ -40,7 +62,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap.moveCamera(cameraUpdate)
 
         val uiSettings = naverMap.uiSettings
-        uiSettings.isLocationButtonEnabled = true
+        uiSettings.isLocationButtonEnabled = false
+
+        currentLocationButton.map = naverMap
 
 
         locationSource = FusedLocationSource(this@MainActivity, LOCATION_PERMISSION_REQUEST_CODE)
@@ -57,22 +81,16 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         retrofit.create(HouseService::class.java).also {
             it.getHouseList()
-                .enqueue(object: Callback<HouseDto>{
+                .enqueue(object : Callback<HouseDto> {
                     override fun onResponse(call: Call<HouseDto>, response: Response<HouseDto>) {
                         if (response.isSuccessful.not()) {
                             // 실패
                             return
                         }
                         response.body()?.let { dto ->
-                            dto.items.forEach { house ->
-                                val marker = Marker()
-                                marker.position = LatLng(house.lat, house.lng)
-                                // TODO 마커 클릭 리스너
-                                marker.map = naverMap
-                                marker.tag = house.id
-                                marker.icon = MarkerIcons.BLACK
-                                marker.iconTintColor = Color.RED
-                            }
+                            updateMarket(dto.items)
+                            viewPagerAdapter.submitList(dto.items)
+                            recyclerViewAdapter.submitList(dto.items)
                         }
                     }
 
@@ -81,6 +99,18 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
 
                 })
+        }
+    }
+
+    private fun updateMarket(house: List<HouseModel>) {
+        house.forEach { house ->
+            val marker = Marker()
+            marker.position = LatLng(house.lat, house.lng)
+            // TODO 마커 클릭 리스너
+            marker.map = naverMap
+            marker.tag = house.id
+            marker.icon = MarkerIcons.BLACK
+            marker.iconTintColor = Color.RED
         }
     }
 
