@@ -12,7 +12,8 @@ import com.bumptech.glide.Glide
 import com.yonikim.aop_part4_chapter01.R
 import com.yonikim.aop_part4_chapter01.model.VideoModel
 
-class VideoAdapter : ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
+class VideoAdapter(val callback: (String, String) -> Unit) :
+    ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(item: VideoModel) {
@@ -26,6 +27,10 @@ class VideoAdapter : ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) 
             Glide.with(thumbnailImageView.context)
                 .load(item.thumb)
                 .into(thumbnailImageView)
+
+            view.setOnClickListener {
+                callback(item.source, item.title)
+            }
         }
     }
 

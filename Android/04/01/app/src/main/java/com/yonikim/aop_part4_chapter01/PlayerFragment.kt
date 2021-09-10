@@ -1,15 +1,33 @@
 package com.yonikim.aop_part4_chapter01
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.yonikim.aop_part4_chapter01.adapter.VideoAdapter
 import com.yonikim.aop_part4_chapter01.databinding.FragmentPlayerBinding
+import com.yonikim.aop_part4_chapter01.dto.VideoDto
+import com.yonikim.aop_part4_chapter01.service.VideoService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.math.abs
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private var binding: FragmentPlayerBinding? = null
+    private var playerView: SimpleExoPlayer? = null
+    private lateinit var videoAdapter: VideoAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -17,6 +35,15 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         val fragmentPlayerBinding = FragmentPlayerBinding.bind(view)
         binding = fragmentPlayerBinding
 
+        initMotionLayoutEvent(fragmentPlayerBinding)
+        initRecyclerView(fragmentPlayerBinding)
+        initPlayerView(fragmentPlayerBinding)
+        initControlButton(fragmentPlayerBinding)
+
+        getVideoList()
+    }
+
+    private fun initMotionLayoutEvent(fragmentPlayerBinding: FragmentPlayerBinding) {
         fragmentPlayerBinding.playerMotionLayout.setTransitionListener(object :
             MotionLayout.TransitionListener {
             override fun onTransitionStarted(
@@ -49,12 +76,100 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                 progress: Float
             ) {
             }
-
         })
+    }
+
+    private fun initRecyclerView(fragmentPlayerBinding: FragmentPlayerBinding) {
+        videoAdapter = VideoAdapter(callback = { url, title ->
+            play(url, title)
+        })
+        fragmentPlayerBinding.fragmentRecyclerView.apply {
+            adapter = videoAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun initPlayerView(fragmentPlayerBinding: FragmentPlayerBinding) {
+        context?.let {
+            playerView = SimpleExoPlayer.Builder(it).build()
+        }
+
+        fragmentPlayerBinding.playerView.player = playerView
+
+        binding?.let {
+            playerView?.addListener(object : Player.Listener {
+                override fun onIsPlayingChanged(isPlaying: Boolean) {
+                    super.onIsPlayingChanged(isPlaying)
+                    if (isPlaying) {
+                        it.bottomPlayerControlButton.setImageResource(R.drawable.ic_baseline_pause_24)
+                    } else {
+                        it.bottomPlayerControlButton.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                    }
+
+                }
+            })
+        }
+
+    }
+
+    private fun initControlButton(fragmentPlayerBinding: FragmentPlayerBinding) {
+        fragmentPlayerBinding.bottomPlayerControlButton.setOnClickListener {
+            val playerView = this.playerView ?: return@setOnClickListener
+            if (playerView.isPlaying) {
+                playerView.pause()
+            } else {
+                playerView.play()
+            }
+        }
+    }
+
+    private fun getVideoList() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://run.mocky.io/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        retrofit.create(VideoService::class.java).also {
+            it.listVideos()
+                .enqueue(object : Callback<VideoDto> {
+                    override fun onResponse(call: Call<VideoDto>, response: Response<VideoDto>) {
+                        if (response.isSuccessful.not()) {
+                            Log.d("MainActivity", "listVideos response fail")
+                            return
+                        }
+                        response.body()?.let { videoDto ->
+                            videoAdapter.submitList(videoDto.videos)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<VideoDto>, t: Throwable) {}
+                })
+        }
+    }
+
+
+    fun play(url: String, title: String) {
+        context?.let {
+            val dataSourceFactory = DefaultDataSourceFactory(it)
+            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(MediaItem.fromUri(Uri.parse(url)))
+            playerView?.setMediaSource(mediaSource)
+            playerView?.prepare()
+            playerView?.play()
+        }
+        binding?.let {
+            it.playerMotionLayout.transitionToEnd()
+            it.bottomTitleTextView.text = title
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        playerView?.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+        playerView?.release()
     }
 }

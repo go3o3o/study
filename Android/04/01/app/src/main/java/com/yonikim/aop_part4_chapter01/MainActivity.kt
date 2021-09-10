@@ -26,7 +26,11 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, PlayerFragment())
             .commit()
 
-        videoAdapter = VideoAdapter()
+        videoAdapter = VideoAdapter(callback = { url, title ->
+            supportFragmentManager.fragments.find { it is PlayerFragment }?.let {
+                (it as PlayerFragment).play(url, title)
+            }
+        })
 
         findViewById<RecyclerView>(R.id.mainRecyclerView).apply {
             adapter = videoAdapter
@@ -48,11 +52,10 @@ class MainActivity : AppCompatActivity() {
                             Log.d("MainActivity", "listVideos response fail")
                             return
                         }
-                        response.body()?.let { videoDto ->9
+                        response.body()?.let { videoDto ->
+                            9
                             videoAdapter.submitList(videoDto.videos)
                         }
-
-
                     }
 
                     override fun onFailure(call: Call<VideoDto>, t: Throwable) {}
