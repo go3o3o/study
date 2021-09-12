@@ -8,3 +8,4 @@ data class MusicEntity(
     @SerializedName("artist") val artist: String,
     @SerializedName("coverUrl") val coverUrl: String
 )
+

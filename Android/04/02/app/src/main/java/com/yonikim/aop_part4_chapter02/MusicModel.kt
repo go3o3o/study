@@ -8,3 +8,4 @@ data class MusicModel(
     val coverUrl: String,
     val isPlaying: Boolean = false
 )
+
