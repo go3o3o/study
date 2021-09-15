@@ -50,8 +50,8 @@ class SearchRecyclerAdapter :
         searchResult: List<SearchResultEntity>,
         searchResultClickListener: (SearchResultEntity) -> Unit
     ) {
-        this.searchResultList = searchResultList
+        this.searchResultList = searchResult
         this.searchResultClickListener = searchResultClickListener
-
+        notifyDataSetChanged()
     }
 }
