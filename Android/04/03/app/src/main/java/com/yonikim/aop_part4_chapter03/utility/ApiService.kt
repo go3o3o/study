@@ -1,4 +1,5 @@
 
+import com.yonikim.aop_part4_chapter03.Key
 import com.yonikim.aop_part4_chapter03.Url
 import com.yonikim.aop_part4_chapter03.response.search.SearchResponse
 import retrofit2.Response
@@ -10,7 +11,7 @@ interface ApiService {
 
     @GET(Url.GET_TMAP_LOCATION)
     suspend fun getSearchLocation(
-        @Header("appKey") appKey: String = Key.TMAP_API,
+        @Header("appKey") appKey: String = Key.TMAP_APP_KEY,
         @Query("version") version: Int = 1,
         @Query("callback") callback: String? = null,
         @Query("count") count: Int = 20,
@@ -29,7 +30,7 @@ interface ApiService {
 
 //    @GET(Url.GET_TMAP_REVERSE_GEO_CODE)
 //    suspend fun getReverseGeoCode(
-//        @Header("appKey") appKey: String = Key.TMAP_API,
+//        @Header("appKey") appKey: String = Key.TMAP_APP_KEY,
 //        @Query("version") version: Int = 1,
 //        @Query("callback") callback: String? = null,
 //        @Query("lat") lat: Double,
