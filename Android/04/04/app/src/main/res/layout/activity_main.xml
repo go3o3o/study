@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:fitsSystemWindows="false"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="false">
 
     <androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/buttonShowMotionLayout"
+        android:id="@+id/buttonShownMotionLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -76,7 +75,7 @@
                         android:layout_width="0dp"
                         android:layout_height="400dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_android_black_24dp"
+                        android:src="@drawable/img_killingeve"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +94,8 @@
                     <androidx.constraintlayout.motion.widget.MotionLayout
                         android:id="@+id/gatheringDigitalThingsMotionLayout"
                         android:layout_width="480dp"
-                        android:layout_height="480dp"
+                        android:layout_height="400dp"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="60dp"
                         app:layoutDescription="@xml/gathering_digital_things_scene"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -145,6 +145,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                     </androidx.constraintlayout.motion.widget.MotionLayout>
 
                     <TextView
