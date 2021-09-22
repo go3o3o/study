@@ -12,14 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aoppart4chapter05">
         <activity
-            android:name=".MainActivity"
+            android:name=".SearchActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -31,6 +34,7 @@
                     android:scheme="aop-part4-chapter05" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

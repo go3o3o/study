@@ -16,7 +16,7 @@ class AuthTokenProvider(private val context: Context) {
             .apply()
     }
 
-    private val token: String?
+    val token: String?
         get() = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_AUTH_TOKEN, null)
 

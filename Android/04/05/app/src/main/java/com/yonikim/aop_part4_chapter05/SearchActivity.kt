@@ -1,0 +1,37 @@
+package com.yonikim.aop_part4_chapter05
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.yonikim.aop_part4_chapter05.databinding.ActivitySearchBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
+
+class SearchActivity : AppCompatActivity(), CoroutineScope {
+
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    private lateinit var binding: ActivitySearchBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+    }
+
+    private fun initAdapter() = with(binding) {
+
+    }
+
+    private fun initViews() = with(binding) {
+
+    }
+
+    private fun bindViews() = with(binding) {
+
+    }
+}
