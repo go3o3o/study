@@ -11,12 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Aoppart4chapter05">
-        <activity
-            android:name=".SearchActivity"
-            android:exported="true" />
+        <activity android:name=".RepositoryActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SearchActivity" />
         <activity
             android:name=".SignInActivity"
-            android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +33,7 @@
                     android:scheme="aop-part4-chapter05" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+
     </application>
 
 </manifest>

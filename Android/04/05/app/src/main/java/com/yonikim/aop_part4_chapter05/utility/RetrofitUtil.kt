@@ -13,10 +13,11 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitUtil {
     val authApiService: AuthApiService by lazy { getGithubAuthRetrofit().create(AuthApiService::class.java) }
+    val githubApiService: GithubApiService by lazy { getGithubAuthRetrofit().create(GithubApiService::class.java) }
 
     private fun getGithubAuthRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Url.GITHUB_URL)
+            .baseUrl(Url.GITHUB_API_URL)
             .addConverterFactory(
                 GsonConverterFactory.create(
                     GsonBuilder()
