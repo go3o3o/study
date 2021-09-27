@@ -3,9 +3,11 @@ package com.yonikim.aop_part4_chapter06
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -59,11 +61,37 @@ class MainActivity : AppCompatActivity() {
       requestCode == REQUEST_ACCESS_LOCATION_PERMISSIONS &&
           grantResults[0] == PackageManager.PERMISSION_GRANTED
 
-    if (locationPermissionGranted.not()) {
-      finish()
+    val backgroundLocationPermissionGranted =
+      requestCode == REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS &&
+          grantResults[0] == PackageManager.PERMISSION_GRANTED
+
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      if (backgroundLocationPermissionGranted.not()) {
+        requestBackgroundLocationPermissions()
+      } else {
+        fetchAirQualityData()
+      }
+    } else {
+      if (locationPermissionGranted.not()) {
+        finish()
+      } else {
+        fetchAirQualityData()
+      }
     }
 
-    fetchAirQualityData()
+
+
+  }
+
+  @RequiresApi(Build.VERSION_CODES.Q)
+  private fun requestBackgroundLocationPermissions() {
+    ActivityCompat.requestPermissions(
+      this,
+      arrayOf(
+        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+      ),
+      REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS
+    )
   }
 
   private fun requestLocationPermissions() {
@@ -165,5 +193,6 @@ class MainActivity : AppCompatActivity() {
 
   companion object {
     private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
+    private const val REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS = 200
   }
 }
