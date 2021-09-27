@@ -1,9 +1,9 @@
-package com.yonikim.aop_part4_chapter06.data.models.monitoringstation
+package com.yonikim.aop_part4_chapter06.data.models.airquality
 
 
 import com.google.gson.annotations.SerializedName
 
-data class MonitoringStationsResponse(
+data class AirQualityResponse(
     @SerializedName("response")
     val response: Response?
 )

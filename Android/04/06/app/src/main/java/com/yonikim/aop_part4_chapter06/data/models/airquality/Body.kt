@@ -1,11 +1,11 @@
-package com.yonikim.aop_part4_chapter06.data.models.monitoringstation
+package com.yonikim.aop_part4_chapter06.data.models.airquality
 
 
 import com.google.gson.annotations.SerializedName
 
 data class Body(
   @SerializedName("items")
-    val monitoringStations: List<MonitoringStation>?,
+    val measuredValues: List<MeasuredValue>?,
   @SerializedName("numOfRows")
     val numOfRows: Int?,
   @SerializedName("pageNo")
