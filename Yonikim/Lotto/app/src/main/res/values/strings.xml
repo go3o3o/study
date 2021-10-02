@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Lotto</string>
+    <string name="app_name">WORLD LOTTO</string>
+    <string name="wise_saying">간절히 원하면 온 우주가 돕는다</string>
+    <string name="desire">나는 1등에 당첨된다!!!</string>
+    <string name="desire_saying">소리내어 5번 읊은 후 아래 버튼을 눌러주세요.</string>
+    <string name="ko_lotto_645">로또6/45</string>
+    <string name="ko_lotto_720">연금복권</string>
+    <string name="us_power_ball">파워볼</string>
+    <string name="us_mega_millions">메가밀리언</string>
+    <string name="zh_ssang">쌍색구</string>
 </resources>
