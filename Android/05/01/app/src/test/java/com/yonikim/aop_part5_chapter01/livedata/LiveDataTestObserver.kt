@@ -1,6 +1,7 @@
 package com.yonikim.aop_part5_chapter01.livedata
 
 import androidx.lifecycle.Observer
+import com.yonikim.aop_part5_chapter01.presentation.detail.ToDoDetailState
 
 class LiveDataTestObserver<T> : Observer<T> {
     private val values: MutableList<T> = mutableListOf()

@@ -6,6 +6,7 @@ import com.yonikim.aop_part5_chapter01.di.appTestModule
 import com.yonikim.aop_part5_chapter01.livedata.LiveDataTestObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -20,8 +21,10 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 
+@ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 internal abstract class ViewModelTest : KoinTest {
+
     @get:Rule
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
@@ -48,6 +51,7 @@ internal abstract class ViewModelTest : KoinTest {
     protected fun <T> LiveData<T>.test(): LiveDataTestObserver<T> {
         val testObserver = LiveDataTestObserver<T>()
         observeForever(testObserver)
+
         return testObserver
     }
 

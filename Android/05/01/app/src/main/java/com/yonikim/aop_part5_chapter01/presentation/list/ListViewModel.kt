@@ -2,12 +2,11 @@ package com.yonikim.aop_part5_chapter01.presentation.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yonikim.aop_part5_chapter01.data.entity.ToDoEntity
 import com.yonikim.aop_part5_chapter01.domain.todo.DeleteAllToDoItemUseCase
 import com.yonikim.aop_part5_chapter01.domain.todo.GetToDoListUseCase
-import com.yonikim.aop_part5_chapter01.domain.todo.UpdateToDoListUseCase
+import com.yonikim.aop_part5_chapter01.domain.todo.UpdateToDoItemUseCase
 import com.yonikim.aop_part5_chapter01.presentation.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
  */
 internal class ListViewModel(
     private val getToDoListUseCase: GetToDoListUseCase,
-    private val updateToDoListUseCase: UpdateToDoListUseCase,
+    private val updateToDoItemUseCase: UpdateToDoItemUseCase,
     private val deleteAllToDoItemUseCase: DeleteAllToDoItemUseCase
 ) : BaseViewModel() {
 
@@ -33,7 +32,7 @@ internal class ListViewModel(
     }
 
     fun updateEntity(toDoEntity: ToDoEntity) = viewModelScope.launch {
-        updateToDoListUseCase(toDoEntity)
+        updateToDoItemUseCase(toDoEntity)
     }
 
     fun deleteAll() = viewModelScope.launch {
