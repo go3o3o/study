@@ -1,4 +1,4 @@
-package com.yonikim.aop_part5_chapter01
+package com.yonikim.aop_part5_chapter02
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +8,4 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
-
-
 }

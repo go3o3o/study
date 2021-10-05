@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aoppart5chapter01">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.detail.DetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.list.ListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
