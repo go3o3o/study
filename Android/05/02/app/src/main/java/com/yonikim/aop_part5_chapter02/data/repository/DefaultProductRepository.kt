@@ -2,39 +2,46 @@ package com.yonikim.aop_part5_chapter02.data.repository
 
 import com.yonikim.aop_part5_chapter02.data.entity.product.ProductEntity
 import com.yonikim.aop_part5_chapter02.data.network.ProductApiService
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 class DefaultProductRepository(
-    private val productApi: ProductApiService
-): ProductRepository {
-    override suspend fun getProductList(): List<ProductEntity> {
+    private val productApi: ProductApiService,
+    private val ioDispatcher: CoroutineDispatcher
+) : ProductRepository {
+
+    override suspend fun getProductList(): List<ProductEntity> = withContext(ioDispatcher) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getLocalProductList(): List<ProductEntity> {
+    override suspend fun getLocalProductList(): List<ProductEntity> = withContext(ioDispatcher)
+    {
         TODO("Not yet implemented")
     }
 
-    override suspend fun insertProductItem(productItem: ProductEntity): Long {
+    override suspend fun insertProductItem(productItem: ProductEntity): Long =
+        withContext(ioDispatcher) {
+            TODO("Not yet implemented")
+        }
+
+    override suspend fun insertProductList(productList: List<ProductEntity>) =
+        withContext(ioDispatcher) {
+            TODO("Not yet implemented")
+        }
+
+    override suspend fun updateProductItem(productItem: ProductEntity) = withContext(ioDispatcher) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun insertProductList(productList: List<ProductEntity>) {
+    override suspend fun getProductItem(itemId: Long): ProductEntity? = withContext(ioDispatcher) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateProductItem(productItem: ProductEntity) {
+    override suspend fun deleteAll() = withContext(ioDispatcher) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getProductItem(itemId: Long): ProductEntity? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteAll() {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteProductItem(itemId: Long) {
+    override suspend fun deleteProductItem(itemId: Long) = withContext(ioDispatcher) {
         TODO("Not yet implemented")
     }
 }
