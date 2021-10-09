@@ -15,6 +15,6 @@ internal class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileB
     override fun getViewBinding(): FragmentProfileBinding = FragmentProfileBinding.inflate(layoutInflater)
 
     override fun observeData() {
-        TODO("Not yet implemented")
+
     }
 }

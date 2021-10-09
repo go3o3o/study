@@ -9,7 +9,7 @@ import retrofit2.http.Path
 interface ProductApiService {
 
     @GET("products")
-    suspend fun  getProduct(): Response<ProductsResponse>
+    suspend fun  getProducts(): Response<ProductsResponse>
 
     @GET("products/{productId}")
     suspend fun getProduct(@Path("productId") productId: Long): Response<ProductResponse>

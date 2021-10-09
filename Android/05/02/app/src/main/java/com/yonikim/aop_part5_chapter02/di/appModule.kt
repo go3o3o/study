@@ -7,6 +7,7 @@ import com.yonikim.aop_part5_chapter02.data.network.provideProductRetrofit
 import com.yonikim.aop_part5_chapter02.data.repository.DefaultProductRepository
 import com.yonikim.aop_part5_chapter02.data.repository.ProductRepository
 import com.yonikim.aop_part5_chapter02.domain.GetProductItemUseCase
+import com.yonikim.aop_part5_chapter02.presentation.list.GetProductListUseCase
 import com.yonikim.aop_part5_chapter02.presentation.list.ProductListViewModel
 import com.yonikim.aop_part5_chapter02.presentation.main.MainViewModel
 import com.yonikim.aop_part5_chapter02.presentation.profile.ProfileViewModel
@@ -18,7 +19,7 @@ val appModule = module {
 
     // ViewModel
     viewModel { MainViewModel() }
-    viewModel { ProductListViewModel() }
+    viewModel { ProductListViewModel(get()) }
     viewModel { ProfileViewModel() }
 
     // Coroutines Dispatcher
@@ -27,6 +28,7 @@ val appModule = module {
 
     // Use-Cases
     factory { GetProductItemUseCase(get()) }
+    factory { GetProductListUseCase(get()) }
 
     // Repositories
     single<ProductRepository> { DefaultProductRepository(get(), get()) }
