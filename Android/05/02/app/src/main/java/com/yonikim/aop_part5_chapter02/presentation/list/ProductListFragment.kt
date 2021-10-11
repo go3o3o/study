@@ -8,6 +8,7 @@ import com.yonikim.aop_part5_chapter02.databinding.FragmentProductListBinding
 import com.yonikim.aop_part5_chapter02.extensions.toast
 import com.yonikim.aop_part5_chapter02.presentation.BaseFragment
 import com.yonikim.aop_part5_chapter02.presentation.adapter.ProductListAdapter
+import com.yonikim.aop_part5_chapter02.presentation.detail.ProductDetailActivity
 import org.koin.android.ext.android.inject
 
 internal class ProductListFragment :

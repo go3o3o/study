@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.yonikim.aop_part5_chapter02.data.entity.product.ProductEntity
 import com.yonikim.aop_part5_chapter02.databinding.ViewholderProductItemBinding
+import com.yonikim.aop_part5_chapter02.extensions.loadCenterCrop
 
 class ProductListAdapter : RecyclerView.Adapter<ProductListAdapter.ProductItemViewHolder>() {
 
