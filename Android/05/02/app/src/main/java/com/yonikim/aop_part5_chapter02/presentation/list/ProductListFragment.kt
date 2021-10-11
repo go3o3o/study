@@ -9,6 +9,7 @@ import com.yonikim.aop_part5_chapter02.extensions.toast
 import com.yonikim.aop_part5_chapter02.presentation.BaseFragment
 import com.yonikim.aop_part5_chapter02.presentation.adapter.ProductListAdapter
 import com.yonikim.aop_part5_chapter02.presentation.detail.ProductDetailActivity
+import com.yonikim.aop_part5_chapter02.presentation.main.MainActivity
 import org.koin.android.ext.android.inject
 
 internal class ProductListFragment :
@@ -27,7 +28,9 @@ internal class ProductListFragment :
 
     private val startProductDetailForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            //
+            if (result.resultCode == ProductDetailActivity.PRODUCT_ORDERED_RESULT_CODE) {
+                (requireActivity() as MainActivity).viewModel.refreshOrderList()
+            }
         }
 
     override fun observeData() = viewModel.productListStateLiveData.observe(this) {
