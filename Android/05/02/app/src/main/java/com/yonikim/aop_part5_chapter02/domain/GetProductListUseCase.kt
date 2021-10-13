@@ -7,7 +7,7 @@ internal class GetProductListUseCase(
     private val productRepository: ProductRepository
 ): UseCase {
 
-    suspend operator fun invoke(productId: Long): ProductEntity? {
-        return productRepository.getProductItem(productId)
+    suspend operator fun invoke(): List<ProductEntity> {
+        return productRepository.getProductList()
     }
 }
