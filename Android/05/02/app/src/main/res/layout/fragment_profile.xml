@@ -33,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:constraint_referenced_ids="profileImageView,userNameTextView,logoutButton"
+        app:constraint_referenced_ids="profileImageView,userNameTextView,logoutButton,recyclerView"
         tools:visibility="visible" />
 
     <Button

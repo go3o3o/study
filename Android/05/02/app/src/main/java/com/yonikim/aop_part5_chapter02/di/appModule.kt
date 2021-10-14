@@ -6,6 +6,7 @@ import com.yonikim.aop_part5_chapter02.data.network.buildOkHttpClient
 import com.yonikim.aop_part5_chapter02.data.network.provideGsonConverterFactory
 import com.yonikim.aop_part5_chapter02.data.network.provideProductApiService
 import com.yonikim.aop_part5_chapter02.data.network.provideProductRetrofit
+import com.yonikim.aop_part5_chapter02.data.preference.PreferenceManager
 import com.yonikim.aop_part5_chapter02.data.repository.DefaultProductRepository
 import com.yonikim.aop_part5_chapter02.data.repository.ProductRepository
 import com.yonikim.aop_part5_chapter02.domain.GetProductItemUseCase
@@ -25,7 +26,7 @@ val appModule = module {
     // ViewModel
     viewModel { MainViewModel() }
     viewModel { ProductListViewModel(get()) }
-    viewModel { ProfileViewModel() }
+    viewModel { ProfileViewModel(get()) }
     viewModel { (productId: Long) -> ProductDetailViewModel(productId, get(), get()) }
 
     // Coroutines Dispatcher
@@ -47,6 +48,8 @@ val appModule = module {
     single { provideProductRetrofit(get(), get()) }
 
     single { provideProductApiService(get()) }
+
+    single { PreferenceManager(androidApplication()) }
 
     // Database
     single { provideDB(androidApplication()) }

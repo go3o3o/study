@@ -3,6 +3,8 @@ package com.yonikim.aop_part5_chapter02.presentation.profile
 import android.app.Activity
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -49,13 +51,20 @@ internal class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileB
             }
         }
 
-    override fun observeData() = viewModel {
+    override fun observeData() = viewModel.profileStateLiveData.observe(this) {
+        when (it) {
+            is ProfileState.UnInitialized -> initViews()
+            is ProfileState.Loading -> handleLoadingState()
+            is ProfileState.Login -> TODO()
+            is ProfileState.Success -> handleSuccessState(it)
+            is ProfileState.Error -> TODO()
+        }
 
     }
 
     private fun initViews() = with(binding) {
         loginButton.setOnClickListener {
-
+            signInGoogle()
         }
         logoutButton.setOnClickListener {
 
@@ -67,4 +76,29 @@ internal class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileB
         loginLauncher.launch(signInIntent)
 
     }
+
+    private fun handleLoadingState() = with(binding) {
+        progressBar.isVisible = true
+        loginRequiredGroup.isGone = true
+    }
+
+    private fun handleSuccessState(state: ProfileState.Success) = with(binding) {
+        progressBar.isGone = true
+        when(state) {
+            is ProfileState.Success.Registered -> {
+                handleRegisteredState()
+            }
+            is ProfileState.Success.NotRegistered -> {
+                profileGroup.isGone = true
+                loginRequiredGroup.isVisible = true
+//                adapter.setProductList(listOf())
+            }
+        }
+    }
+
+    private fun handleRegisteredState() {
+
+    }
+
+
 }
