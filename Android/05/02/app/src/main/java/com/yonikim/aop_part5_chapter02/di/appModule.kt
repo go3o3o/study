@@ -9,10 +9,13 @@ import com.yonikim.aop_part5_chapter02.data.network.provideProductRetrofit
 import com.yonikim.aop_part5_chapter02.data.preference.PreferenceManager
 import com.yonikim.aop_part5_chapter02.data.repository.DefaultProductRepository
 import com.yonikim.aop_part5_chapter02.data.repository.ProductRepository
+import com.yonikim.aop_part5_chapter02.domain.*
+import com.yonikim.aop_part5_chapter02.domain.DeleteOrderedProductListUseCase
+import com.yonikim.aop_part5_chapter02.domain.GetOrderedProductListUseCase
 import com.yonikim.aop_part5_chapter02.domain.GetProductItemUseCase
-import com.yonikim.aop_part5_chapter02.presentation.detail.ProductDetailViewModel
 import com.yonikim.aop_part5_chapter02.domain.GetProductListUseCase
 import com.yonikim.aop_part5_chapter02.domain.OrderProductItemUseCase
+import com.yonikim.aop_part5_chapter02.presentation.detail.ProductDetailViewModel
 import com.yonikim.aop_part5_chapter02.presentation.list.ProductListViewModel
 import com.yonikim.aop_part5_chapter02.presentation.main.MainViewModel
 import com.yonikim.aop_part5_chapter02.presentation.profile.ProfileViewModel
@@ -26,7 +29,7 @@ val appModule = module {
     // ViewModel
     viewModel { MainViewModel() }
     viewModel { ProductListViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get(), get()) }
     viewModel { (productId: Long) -> ProductDetailViewModel(productId, get(), get()) }
 
     // Coroutines Dispatcher
@@ -37,6 +40,8 @@ val appModule = module {
     factory { GetProductItemUseCase(get()) }
     factory { GetProductListUseCase(get()) }
     factory { OrderProductItemUseCase(get()) }
+    factory { GetOrderedProductListUseCase(get()) }
+    factory { DeleteOrderedProductListUseCase(get()) }
 
     // Repositories
     single<ProductRepository> { DefaultProductRepository(get(), get(), get()) }
