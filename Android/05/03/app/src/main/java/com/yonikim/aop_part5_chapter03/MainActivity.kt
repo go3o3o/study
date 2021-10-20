@@ -1,6 +1,7 @@
 package com.yonikim.aop_part5_chapter03
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,15 +11,22 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.FileUtils
+import android.os.Handler
+import android.os.Looper
+import android.view.ScaleGestureDetector
+import android.view.View
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.core.ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
 import androidx.camera.core.ImageCapture.FLASH_MODE_AUTO
+import androidx.camera.core.impl.ImageOutputConfig
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import com.yonikim.aop_part5_chapter03.databinding.ActivityMainBinding
+import com.yonikim.aop_part5_chapter03.extensions.loadCenterCrop
 import com.yonikim.aop_part5_chapter03.util.PathUtil
 import java.io.File
 import java.io.FileNotFoundException
@@ -36,11 +44,12 @@ class MainActivity : AppCompatActivity() {
     private val cameraMainExecutors by lazy { ContextCompat.getMainExecutor(this) }
     private val cameraProviderFuture by lazy { ProcessCameraProvider.getInstance(this) }
     private val displayManager by lazy { getSystemService(Context.DISPLAY_SERVICE) as DisplayManager }
+
     private var displayId: Int = -1
-
     private var camera: Camera? = null
-
+    private var root: View? = null
     private var isCapturing: Boolean = false
+    private var isFlashEnabled: Boolean = false
 
     private val displayListener = object : DisplayManager.DisplayListener {
         override fun onDisplayAdded(displayId: Int) {}
@@ -49,15 +58,21 @@ class MainActivity : AppCompatActivity() {
 
         override fun onDisplayChanged(displayId: Int) {
             if (this@MainActivity.displayId == displayId) {
-
+                if (::imageCapture.isInitialized && root != null) {
+                    imageCapture.targetRotation =
+                        root?.display?.rotation ?: ImageOutputConfig.INVALID_ROTATION
+                }
             }
         }
-
     }
+
+    private var uriList = mutableListOf<Uri>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        root = binding.root
         setContentView(binding.root)
 
         if (allPermissionsGranted()) {
@@ -108,11 +123,44 @@ class MainActivity : AppCompatActivity() {
                 )
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
-
+                bindZoomListener()
+                initFlashAndAddListener()
+                bindPreviewImageViewClickListener()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }, cameraMainExecutors)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun bindZoomListener() = with(binding) {
+        val listener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                val currentZoomRatio = camera?.cameraInfo?.zoomState?.value?.zoomRatio ?: 1f
+                val delta = detector.scaleFactor
+                camera?.cameraControl?.setZoomRatio(currentZoomRatio * delta)
+                return true
+            }
+        }
+        val scaleGestureDetector = ScaleGestureDetector(this@MainActivity, listener)
+        viewFinder.setOnTouchListener { _, event ->
+            scaleGestureDetector.onTouchEvent(event)
+            return@setOnTouchListener true
+        }
+    }
+
+    private fun initFlashAndAddListener() = with(binding) {
+        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
+        flashSwitch.isGone = hasFlash.not()
+
+        if (hasFlash) {
+            flashSwitch.setOnCheckedChangeListener{ _, isChecked ->
+                isFlashEnabled = isChecked
+            }
+        } else {
+            isFlashEnabled = false
+            flashSwitch.setOnCheckedChangeListener(null)
+        }
     }
 
     private fun bindCaptureListener() = with(binding) {
@@ -134,10 +182,15 @@ class MainActivity : AppCompatActivity() {
                     arrayOf("image/jpeg"),
                     null
                 )
-
+                Handler(Looper.getMainLooper()).post {
+                    binding.previewImageView.loadCenterCrop(url = it.toString(), corner = 4f)
+                }
+                flashLight(false)
+                uriList.add(it)
                 false
             } catch (e: Exception) {
                 e.printStackTrace()
+                flashLight(false)
                 Toast.makeText(this, "파일이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
                 false
             }
@@ -155,6 +208,9 @@ class MainActivity : AppCompatActivity() {
             ).format(System.currentTimeMillis()) + ".jpg"
         )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+        if (isFlashEnabled) {
+            flashLight(true)
+        }
         imageCapture.takePicture(
             outputOptions,
             cameraExecutor,
@@ -168,9 +224,25 @@ class MainActivity : AppCompatActivity() {
                 override fun onError(exception: ImageCaptureException) {
                     exception.printStackTrace()
                     isCapturing = false
+                    flashLight(false)
                 }
 
             })
+    }
+
+    private fun flashLight(isLight: Boolean) {
+        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
+        if (hasFlash) {
+            camera?.cameraControl?.enableTorch(isLight)
+        }
+    }
+
+    private fun bindPreviewImageViewClickListener() = with(binding) {
+        previewImageView.setOnClickListener {
+            startActivity(
+                ImageListActivity.newIntent(this@MainActivity, uriList)
+            )
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
