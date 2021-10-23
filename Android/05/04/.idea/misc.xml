@@ -8,7 +8,9 @@
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.140625" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.140625" />
         <entry key="app/src/main/res/drawable/selector_menu_color.xml" value="0.140625" />
+        <entry key="app/src/main/res/layout/activity_add_article.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/activity_chatroom.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/activity_image_preview_list.xml" value="0.12447916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/add_article_activity.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/article_item.xml" value="0.2453125" />
@@ -17,6 +19,7 @@
         <entry key="app/src/main/res/layout/fragment_chatlist.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/item_article.xml" value="0.2453125" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.12447916666666667" />
       </map>
     </option>

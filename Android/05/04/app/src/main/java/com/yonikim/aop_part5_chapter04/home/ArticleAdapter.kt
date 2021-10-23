@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.yonikim.aop_part5_chapter04.databinding.ArticleItemBinding
+import com.yonikim.aop_part5_chapter04.databinding.ItemArticleBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ArticleAdapter(val onItemClicked: (ArticleModel) -> Unit) : ListAdapter<ArticleModel, ArticleAdapter.ViewHolder>(diffUtil) {
-    inner class ViewHolder(private val binding: ArticleItemBinding) :
+    inner class ViewHolder(private val binding: ItemArticleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(articleModel: ArticleModel) {
 
@@ -20,8 +20,8 @@ class ArticleAdapter(val onItemClicked: (ArticleModel) -> Unit) : ListAdapter<Ar
             val createdAt = Date(articleModel.createdAt)
 
             binding.titleTextView.text = articleModel.title
-            binding.createdAtTextView.text = format.format(createdAt).toString()
-            binding.priceTextView.text = articleModel.price
+            binding.dateTextView.text = format.format(createdAt).toString()
+            binding.priceTextView.text = articleModel.content
             if (articleModel.imageUrl.isNotEmpty()) {
                 Glide.with(binding.thumbnailImageView)
                     .load(articleModel.imageUrl)
@@ -37,7 +37,7 @@ class ArticleAdapter(val onItemClicked: (ArticleModel) -> Unit) : ListAdapter<Ar
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ArticleItemBinding.inflate(
+            ItemArticleBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
