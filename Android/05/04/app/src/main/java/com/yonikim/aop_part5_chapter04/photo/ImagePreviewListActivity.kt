@@ -52,7 +52,11 @@ class ImagePreviewListActivity : AppCompatActivity() {
         imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                toolbar.title = getString(R.string.images_page, position + 1, imageViewPagerAdapter.uriList.size)
+                toolbar.title = getString(
+                    R.string.images_page,
+                    position + 1,
+                    imageViewPagerAdapter.uriList.size
+                )
             }
         })
         deleteButton.setOnClickListener {
@@ -60,7 +64,7 @@ class ImagePreviewListActivity : AppCompatActivity() {
         }
         confirmButton.setOnClickListener {
             setResult(Activity.RESULT_OK, Intent().apply {
-                putExtra(URI_LIST_KEY, ArrayList<Uri>().apply { imageViewPagerAdapter.uriList.forEach { add(it) } })
+                putExtra(URI_LIST_KEY, ArrayList<Uri>(imageViewPagerAdapter.uriList))
             })
             finish()
         }

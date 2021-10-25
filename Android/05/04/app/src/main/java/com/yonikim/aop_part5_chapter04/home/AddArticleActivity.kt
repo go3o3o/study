@@ -29,9 +29,11 @@ class AddArticleActivity : AppCompatActivity() {
         const val PERMISSION_REQUEST_CODE = 1000
         const val GALLERY_REQUEST_CODE = 1001
         const val CAMERA_REQUEST_CODE = 1002
+
+        private const val URI_LIST_KEY = "uriList"
     }
 
-    private var selectedUri: Uri? = null
+    private var imageUriList: ArrayList<Uri> = arrayListOf()
     private val auth: FirebaseAuth by lazy {
         Firebase.auth
     }
@@ -63,9 +65,8 @@ class AddArticleActivity : AppCompatActivity() {
 
             shoProgress()
 
-            if (selectedUri != null) {
-                val photoUri = selectedUri ?: return@setOnClickListener
-                uploadPhoto(photoUri,
+            if (imageUriList.isNotEmpty()) {
+                uploadPhoto(imageUriList.first(),
                     successHandler = { uri ->
                         uploadArticle(sellerId, title, content, uri)
                     },
@@ -159,11 +160,20 @@ class AddArticleActivity : AppCompatActivity() {
 
         when (requestCode) {
             GALLERY_REQUEST_CODE -> {
-
-
+                val uri = data?.data
+                if (uri != null) {
+                    imageUriList.add(uri)
+                } else {
+                    Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                }
             }
             CAMERA_REQUEST_CODE -> {
-
+                data?.let { intent ->
+                    val uriList = intent.getParcelableArrayListExtra<Uri>(URI_LIST_KEY)
+                    uriList?.let { list ->
+                        imageUriList.addAll(list)
+                    }
+                }
             }
             else -> {
                 Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
