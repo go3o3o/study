@@ -19,6 +19,7 @@ import com.yonikim.aop_part5_chapter04.DBKey.Companion.CHILD_CHAT
 import com.yonikim.aop_part5_chapter04.DBKey.Companion.DB_ARTICLES
 import com.yonikim.aop_part5_chapter04.DBKey.Companion.DB_USERS
 import com.yonikim.aop_part5_chapter04.R
+import com.yonikim.aop_part5_chapter04.adapter.ArticleAdapter
 import com.yonikim.aop_part5_chapter04.chatList.ChatListItem
 import com.yonikim.aop_part5_chapter04.databinding.FragmentHomeBinding
 

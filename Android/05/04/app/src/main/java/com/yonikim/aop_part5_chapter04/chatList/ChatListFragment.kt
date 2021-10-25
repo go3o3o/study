@@ -18,7 +18,6 @@ import com.yonikim.aop_part5_chapter04.DBKey.Companion.DB_USERS
 import com.yonikim.aop_part5_chapter04.R
 import com.yonikim.aop_part5_chapter04.chatDetail.ChatRoomActivity
 import com.yonikim.aop_part5_chapter04.databinding.FragmentChatlistBinding
-import com.yonikim.aop_part5_chapter04.home.ArticleAdapter
 
 class ChatListFragment : Fragment(R.layout.fragment_chatlist) {
 
