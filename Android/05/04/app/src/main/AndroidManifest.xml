@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
+        android:name=".AopPart5Chapter04Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,8 +26,9 @@
         </activity>
         <activity android:name=".home.AddArticleActivity" />
         <activity android:name=".chatDetail.ChatRoomActivity" />
-        <activity android:name=".photo.CameraActivity"/>
-        <activity android:name=".photo.ImagePreviewListActivity"/>
+        <activity android:name=".photo.CameraActivity" />
+        <activity android:name=".photo.ImagePreviewListActivity" />
+        <activity android:name=".gallery.GalleryActivity" />
     </application>
 
 </manifest>
