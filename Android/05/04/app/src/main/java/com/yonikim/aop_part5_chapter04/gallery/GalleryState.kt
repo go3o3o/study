@@ -9,8 +9,8 @@ sealed class GalleryState {
 
     data class Success(
         val photoList: List<GalleryPhoto>,
-//        @IdRes val toastId: Int? = null
-    ) : GalleryState()
+        @IdRes val toastId: Int? = null
+    ): GalleryState()
 
     data class Confirm(
         val photoList: List<GalleryPhoto>

@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 class GalleryPhotoRepository(
     private val context: Context
 ) {
-    suspend fun getAllPhotos(): List<GalleryPhoto> = withContext(Dispatchers.IO) {
+    suspend fun getAllPhotos(): MutableList<GalleryPhoto> = withContext(Dispatchers.IO) {
         val galleryPhotoList = mutableListOf<GalleryPhoto>()
         val uriExternal: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val query: Cursor?
