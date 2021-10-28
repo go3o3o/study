@@ -52,7 +52,7 @@ class GalleryPhotoRepository(
                         uri = contentUri,
                         name = name,
                         size = size,
-                        date = date
+                        date = date?: ""
                     )
                 )
             }
